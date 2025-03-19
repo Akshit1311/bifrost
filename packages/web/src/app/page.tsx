@@ -1,7 +1,17 @@
-import Link from "next/link";
+import {
+  ArrowRightCircleIcon,
+  ArrowsUpDownIcon,
+} from "@heroicons/react/16/solid";
 
-import { LatestPost } from "~/app/_components/post";
 import { api, HydrateClient } from "~/trpc/server";
+import ChainSelector from "./_components/ChainSelector";
+import HeroTitle from "./_components/HeroTitle";
+import { Input } from "~/components/ui/input";
+import CoinSelector from "./_components/CoinSelector";
+import { Button } from "~/components/ui/button";
+import { Terminal } from "lucide-react";
+import Image from "next/image";
+import BridgeSelector from "./_components/BridgeSelector";
 
 export default async function Home() {
   const hello = await api.post.hello({ text: "from tRPC" });
@@ -10,42 +20,25 @@ export default async function Home() {
 
   return (
     <HydrateClient>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-          <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-            Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-          </h1>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-            <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-              href="https://create.t3.gg/en/usage/first-steps"
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">First Steps →</h3>
-              <div className="text-lg">
-                Just the basics - Everything you need to know to set up your
-                database and authentication.
-              </div>
-            </Link>
-            <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-              href="https://create.t3.gg/en/introduction"
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">Documentation →</h3>
-              <div className="text-lg">
-                Learn more about Create T3 App, the libraries it uses, and how
-                to deploy it.
-              </div>
-            </Link>
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <p className="text-2xl text-white">
-              {hello ? hello.greeting : "Loading tRPC query..."}
-            </p>
-          </div>
+      {/* <main className="text-white flex min-h-screen flex-col items-center justify-center bg-blue-500 bg-cover bg-center"> */}
+      <main className="text-white flex min-h-screen flex-col items-center justify-center bg-[linear-gradient(rgba(0,100,255,0),rgba(0,100,255,0.8)),url(/assets/images/bifrost.webp)] bg-cover bg-center">
+        <div className="w-fit ">
+          <HeroTitle />
 
-          <LatestPost />
+          <div className="md:w-[450px] mx-auto px-2">
+            <BridgeSelector />
+
+            <div className="my-2 flex gap-2">
+              <CoinSelector placeholder="Select Asset" defaultValue="hudl" />
+              <Input placeholder="Amount" />
+            </div>
+
+            <Button className="w-full my-4">Bridge</Button>
+
+            <div className="text-center text-sm my-4">
+              Made with ❤️ by axit.eth
+            </div>
+          </div>
         </div>
       </main>
     </HydrateClient>
